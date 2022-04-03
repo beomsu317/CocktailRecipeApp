@@ -2,6 +2,7 @@ package com.beomsu317.cocktailrecipeapp.data.repository
 
 import com.beomsu317.cocktailrecipeapp.data.remote.TheCocktailDbApi
 import com.beomsu317.cocktailrecipeapp.data.remote.dto.CategoriesDto
+import com.beomsu317.cocktailrecipeapp.data.remote.dto.CocktailsDto
 import com.beomsu317.cocktailrecipeapp.data.remote.dto.DrinkCategory
 import com.beomsu317.cocktailrecipeapp.domain.repositroy.CocktailRepository
 
@@ -11,5 +12,9 @@ class CocktailRepositoryImpl(
 
     override suspend fun getCategories(): CategoriesDto {
         return api.getListByCategories()
+    }
+
+    override suspend fun getCocktails(category: String): CocktailsDto {
+        return api.getCocktails(category)
     }
 }

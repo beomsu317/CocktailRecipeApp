@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beomsu317.cocktailrecipeapp.presentation.category_list.components.CategoryListItem
+import com.beomsu317.cocktailrecipeapp.presentation.components.TitleSection
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -23,11 +24,10 @@ import kotlinx.coroutines.flow.collectLatest
 fun CategoryListScreen(
     scaffoldState: ScaffoldState,
     viewModel: CategoryListViewModel = hiltViewModel(),
-    onCategoryClick: () -> Unit
+    onCategoryClick: (String) -> Unit
 ) {
     val state = viewModel.state.value
     val oneTimeEventFlow = viewModel.oneTimeEventFlow
-    val swipeRefreshState = rememberSwipeRefreshState(state.isLoading)
 
     LaunchedEffect(key1 = oneTimeEventFlow) {
         viewModel.oneTimeEventFlow.collectLatest { oneTimeEvent ->
@@ -47,65 +47,42 @@ fun CategoryListScreen(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
-        TitleSection()
-        Spacer(modifier = Modifier.height(32.dp))
+        TitleSection("Category")
         CategotySection(
-            swipeRefreshState = swipeRefreshState,
             onCategoryClick = onCategoryClick,
-            onRefresh = {
-                viewModel.getCategories()
-            },
-            categories = state.categories
+            categories = state.categories,
+            isLoading = state.isLoading
         )
     }
 }
 
-@Composable
-fun TitleSection() {
-    Text(
-        text = "Select Category",
-        style = MaterialTheme.typography.h1,
-        color = MaterialTheme.colors.onBackground,
-        fontWeight = FontWeight.Bold
-    )
-}
 
 @Composable
 fun CategotySection(
-    swipeRefreshState: SwipeRefreshState,
-    onCategoryClick: () -> Unit,
-    onRefresh: () -> Unit,
-    categories: List<String>
+    onCategoryClick: (String) -> Unit,
+    categories: List<String>,
+    isLoading: Boolean
 ) {
-    SwipeRefresh(
-        state = swipeRefreshState,
-        onRefresh = {
-            onRefresh()
-        },
-        indicator = { state, trigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = trigger,
-                scale = true,
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.onBackground
-            )
-        }
+    Box(
+        modifier = Modifier.fillMaxSize(),
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(categories) {
-                    CategoryListItem(it, onCategoryClick)
-                }
+            items(categories) {
+                CategoryListItem(it, onCategoryClick)
             }
+        }
+
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                color = MaterialTheme.colors.onBackground
+            )
         }
     }
 }

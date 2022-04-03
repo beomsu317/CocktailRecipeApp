@@ -1,5 +1,6 @@
 package com.beomsu317.cocktailrecipeapp.presentation.category_list.components
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -15,11 +16,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun CategoryListItem(
     category: String,
-    onCategoryClick: () -> Unit
+    onCategoryClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -41,7 +44,7 @@ fun CategoryListItem(
             )
             IconButton(
                 onClick = {
-                    onCategoryClick()
+                    onCategoryClick(category)
                 },
                 modifier = Modifier.padding(end = 4.dp)
             ) {

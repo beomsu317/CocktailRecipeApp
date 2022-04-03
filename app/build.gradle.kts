@@ -78,4 +78,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.24.5-alpha")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.24.5-alpha")
 
+    implementation("io.coil-kt:coil-compose:2.0.0-rc02")
+
 }
