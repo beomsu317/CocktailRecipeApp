@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.beomsu317.cocktailrecipeapp.domain.model.Cocktail
+import com.beomsu317.cocktailrecipeapp.presentation.components.ShimmerAnimation
 
 @Composable
 fun CocktailItem(cocktail: Cocktail) {
@@ -44,6 +45,15 @@ fun CocktailItem(cocktail: Cocktail) {
                     .crossfade(true)
                     .build(),
                 loading = {
+                    ShimmerAnimation(
+                        { brush ->
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(brush = brush)
+                            )
+                        }
+                    )
 
                 },
                 contentDescription = cocktail.strDrink,
@@ -55,7 +65,7 @@ fun CocktailItem(cocktail: Cocktail) {
                                 Color.White,
                                 Color.Black
                             ),
-                            startY = size.height/3,
+                            startY = size.height / 3,
                             endY = size.height
                         )
                         onDrawWithContent {
