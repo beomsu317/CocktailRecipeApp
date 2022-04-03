@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.beomsu317.cocktailrecipeapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".CocktailRecipeApp"
         android:allowBackup="true"
@@ -11,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailRecipeApp">
         <activity
-            android:name=".CocktailRecipeActivity"
+            android:name=".presentation.CocktailRecipeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CocktailRecipeApp">

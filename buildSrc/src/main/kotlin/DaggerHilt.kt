@@ -1,5 +1,5 @@
 object DaggerHilt {
-    const val version = "2.38.1"
-    const val hiltAndroid = "com.google.dagger:hilt-android:$version"
-    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$version"
+    const val hiltVersion = "2.38.1"
+    const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
 }

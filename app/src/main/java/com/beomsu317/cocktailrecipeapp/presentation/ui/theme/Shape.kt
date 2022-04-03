@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.ui.theme
+package com.beomsu317.cocktailrecipeapp.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
