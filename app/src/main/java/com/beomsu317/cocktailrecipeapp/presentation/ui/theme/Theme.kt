@@ -44,7 +44,7 @@ fun CocktailRecipeAppTheme(
     }
 
     val systemUiController = rememberSystemUiController()
-    systemUiController.isStatusBarVisible = false
+    systemUiController.setSystemBarsColor(color = MaterialTheme.colors.primaryVariant)
 
     MaterialTheme(
         colors = colors,

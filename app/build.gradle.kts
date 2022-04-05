@@ -57,6 +57,7 @@ dependencies {
 
     implementation(Compose.ui)
     implementation(Compose.material)
+    implementation("androidx.compose.ui:ui-util:1.1.1")
     implementation(Compose.uiTooling)
     implementation(Compose.uiToolingPreview)
     implementation(Compose.activityCompose)
@@ -80,4 +81,8 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.0.0-rc02")
 
+    implementation("com.google.accompanist:accompanist-pager:0.19.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.19.0")
+
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
 }

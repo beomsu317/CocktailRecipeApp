@@ -1,14 +1,10 @@
 package com.beomsu317.cocktailrecipeapp.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,12 +12,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.beomsu317.cocktailrecipeapp.presentation.category_list.CategoryListScreen
+import com.beomsu317.cocktailrecipeapp.presentation.cocktail_info.CocktailInfoScreen
 import com.beomsu317.cocktailrecipeapp.presentation.cocktail_list.CocktailListScreen
+import com.beomsu317.cocktailrecipeapp.presentation.ingredient_detail.IngredientInfoScreen
 import com.beomsu317.cocktailrecipeapp.presentation.ui.theme.CocktailRecipeAppTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
+@ExperimentalPagerApi
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class CocktailRecipeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,14 @@ class CocktailRecipeActivity : ComponentActivity() {
                             CategoryListScreen(
                                 scaffoldState = scaffoldState,
                                 onCategoryClick = { category ->
-                                    navController.navigate("${Screen.CocktailListScreen.route}/${category.replace("/", "%2f")}")
+                                    navController.navigate(
+                                        "${Screen.CocktailListScreen.route}/${
+                                            category.replace(
+                                                "/",
+                                                "%2f"
+                                            )
+                                        }"
+                                    )
                                 }
                             )
                         }
@@ -54,17 +62,66 @@ class CocktailRecipeActivity : ComponentActivity() {
 
                         }
                         composable(
-                            "${Screen.CocktailListScreen.route}/{category}",
+                            route = "${Screen.CocktailListScreen.route}/{category}",
                             arguments = listOf(
                                 navArgument("category") {
                                     type = NavType.StringType
                                 }
                             )
-                        ) { backStackEntry ->
+                        ) { navBackStackEntry ->
                             val category =
-                                backStackEntry.arguments?.getString("category").toString()
+                                navBackStackEntry.arguments?.getString("category").toString()
                             CocktailListScreen(
                                 category = category,
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
+                                scaffoldState = scaffoldState,
+                                onCocktailClick = { cocktail ->
+                                    val encodedCocktail = Json.encodeToString(
+                                        cocktail
+                                    )
+                                    navController.navigate(
+                                        "${Screen.CocktailDetailScreen.route}/${
+                                            encodedCocktail.replace(
+                                                "/",
+                                                "%2f"
+                                            )
+                                        }"
+                                    )
+                                }
+                            )
+                        }
+                        composable(
+                            route = "${Screen.CocktailDetailScreen.route}/{cocktail}",
+                            arguments = listOf(
+                                navArgument("cocktail") {
+                                    type = NavType.StringType
+                                }
+                            )
+                        ) { navBackStackEntry ->
+                            CocktailInfoScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
+                                scaffoldState = scaffoldState,
+                                onIngredientClick = { ingredient ->
+                                    navController.navigate("${Screen.IngredientDetailScreen.route}/${ingredient}")
+                                }
+                            )
+                        }
+                        composable(
+                            route = "${Screen.IngredientDetailScreen.route}/{ingredient}",
+                            arguments = listOf(
+                                navArgument("ingredient") {
+                                    type = NavType.StringType
+                                }
+                            )
+                        ) { navBackStackEntry ->
+                            IngredientInfoScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
                                 scaffoldState = scaffoldState
                             )
                         }

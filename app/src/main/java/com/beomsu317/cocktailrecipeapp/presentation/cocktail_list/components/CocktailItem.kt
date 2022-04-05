@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,9 +25,12 @@ import coil.request.ImageRequest
 import com.beomsu317.cocktailrecipeapp.domain.model.Cocktail
 import com.beomsu317.cocktailrecipeapp.presentation.components.ShimmerAnimation
 
+@ExperimentalMaterialApi
 @Composable
-fun CocktailItem(cocktail: Cocktail) {
-
+fun CocktailItem(
+    cocktail: Cocktail,
+    onCocktailClick: (Cocktail) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,6 +38,9 @@ fun CocktailItem(cocktail: Cocktail) {
             .padding(8.dp),
         elevation = 8.dp,
         shape = RoundedCornerShape(20.dp),
+        onClick = {
+            onCocktailClick(cocktail)
+        }
     ) {
         Box(
             modifier = Modifier
@@ -54,7 +61,6 @@ fun CocktailItem(cocktail: Cocktail) {
                             )
                         }
                     )
-
                 },
                 contentDescription = cocktail.strDrink,
                 contentScale = ContentScale.Crop,
@@ -79,7 +85,7 @@ fun CocktailItem(cocktail: Cocktail) {
                 style = MaterialTheme.typography.body1,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .padding(bottom = 8.dp)
+                    .padding(start = 8.dp, end = 8.dp ,bottom = 8.dp)
                     .align(Alignment.BottomCenter),
                 color = Color.White
             )
