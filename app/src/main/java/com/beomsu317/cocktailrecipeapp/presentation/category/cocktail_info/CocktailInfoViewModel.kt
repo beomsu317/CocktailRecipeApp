@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import java.net.URLDecoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,9 +34,8 @@ class CocktailInfoViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("cocktail")?.let { encodedCocktail ->
-            Log.d("TAG", ": ${encodedCocktail}")
-            val decodedCocktail = Json.decodeFromString<Cocktail>(encodedCocktail)
-            Log.d("TAG", ": ${decodedCocktail}")
+
+            val decodedCocktail = Json.decodeFromString<Cocktail>(URLDecoder.decode(encodedCocktail, "UTF-8"))
             getCocktailInfos(decodedCocktail.strDrink)
         }
     }

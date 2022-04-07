@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -28,7 +29,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.net.URLEncoder
 
+@ExperimentalComposeUiApi
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
@@ -129,18 +132,15 @@ class CocktailRecipeActivity : ComponentActivity() {
                                                 cocktail
                                             )
                                             categoryNavController.navigate(
-                                                "${Screen.CocktailDetailScreen.route}/${
-                                                    encodedCocktail.replace(
-                                                        "/",
-                                                        "%2f"
-                                                    )
+                                                "${Screen.CocktailInfoScreen.route}/${
+                                                    URLEncoder.encode(encodedCocktail, "UTF-8")
                                                 }"
                                             )
                                         }
                                     )
                                 }
                                 composable(
-                                    route = "${Screen.CocktailDetailScreen.route}/{cocktail}",
+                                    route = "${Screen.CocktailInfoScreen.route}/{cocktail}",
                                     arguments = listOf(
                                         navArgument("cocktail") {
                                             type = NavType.StringType
@@ -153,7 +153,11 @@ class CocktailRecipeActivity : ComponentActivity() {
                                         },
                                         scaffoldState = scaffoldState,
                                         onIngredientClick = { ingredient ->
-                                            categoryNavController.navigate("${Screen.IngredientDetailScreen.route}/${ingredient}")
+                                            categoryNavController.navigate(
+                                                "${Screen.IngredientDetailScreen.route}/${
+                                                    URLEncoder.encode(ingredient, "UTF-8")
+                                                }"
+                                            )
                                         }
                                     )
                                 }
@@ -186,7 +190,7 @@ class CocktailRecipeActivity : ComponentActivity() {
                                         onIngredientClick = { ingredient ->
                                             searchNavController.navigate(
                                                 route = "${Screen.IngredientDetailScreen.route}/${
-                                                    ingredient
+                                                    URLEncoder.encode(ingredient, "UTF-8")
                                                 }"
                                             )
                                         }

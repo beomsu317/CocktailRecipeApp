@@ -15,6 +15,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import java.net.URLDecoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +32,7 @@ class IngredientInfoViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("ingredient")?.let {
-            getIngredient(it)
+            getIngredient(URLDecoder.decode(it, "UTF-8"))
         }
     }
 

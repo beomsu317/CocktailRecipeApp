@@ -7,7 +7,7 @@ sealed class Screen(val route: String, @DrawableRes val resId: Int = -1, val lab
     object CategoryScreen: Screen(route = "category_screen", resId = R.drawable.ic_baseline_category_24, label = "Category")
     object CategoryListScreen: Screen(route = "category_list_screen")
     object CocktailListScreen: Screen("cocktail_list_screen")
-    object CocktailDetailScreen: Screen("cocktail_detail_screen")
+    object CocktailInfoScreen: Screen("cocktail_info_screen")
     object IngredientDetailScreen: Screen("ingredient_detail_screen")
     object SearchScreen: Screen(route = "search_screen", resId = R.drawable.ic_baseline_search_24, label = "Search")
     object MyCocktailScreen: Screen("my_cocktail_screen")
