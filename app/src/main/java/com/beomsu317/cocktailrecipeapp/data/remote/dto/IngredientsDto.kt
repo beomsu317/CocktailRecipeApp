@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class IngredientsDto(
     @SerialName("ingredients")
-    val ingredients: List<IngredientDto>
+    val ingredients: List<IngredientDto>?
 )

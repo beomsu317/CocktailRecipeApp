@@ -18,9 +18,16 @@ class GetIngredientByNameUseCase @Inject constructor(
     operator fun invoke(name: String): Flow<Resource<Ingredient>> = flow {
         try {
             emit(Resource.Loading())
-            val ingredients = repository.getIngredients(name)
-            ingredients.ingredients.map {
-                emit(Resource.Success(it.toIngredient()))
+            val ingredientsDto = repository.getIngredients(name)
+            val ingredients = ingredientsDto.ingredients?.let {
+                it.map {
+                    it.toIngredient()
+                }
+            } ?: emptyList()
+            if (ingredients.isEmpty()) {
+                emit(Resource.Error<Ingredient>("Nothing exists"))
+            } else {
+                emit(Resource.Success(ingredients.first()))
             }
         } catch (e: HttpException) {
             emit(Resource.Error<Ingredient>(e.localizedMessage))

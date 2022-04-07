@@ -1,5 +1,6 @@
 package com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -32,7 +33,9 @@ class CocktailInfoViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("cocktail")?.let { encodedCocktail ->
+            Log.d("TAG", ": ${encodedCocktail}")
             val decodedCocktail = Json.decodeFromString<Cocktail>(encodedCocktail)
+            Log.d("TAG", ": ${decodedCocktail}")
             getCocktailInfos(decodedCocktail.strDrink)
         }
     }

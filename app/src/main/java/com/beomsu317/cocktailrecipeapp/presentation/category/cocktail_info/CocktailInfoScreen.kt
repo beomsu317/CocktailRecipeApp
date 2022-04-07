@@ -45,7 +45,11 @@ fun CocktailInfoScreen(
         CocktailInfoSection(
             cocktailInfos = state.cocktailInfos,
             isLoading = state.isLoading,
-            onIngredientClick = onIngredientClick
+            onIngredientClick = onIngredientClick,
+            true,
+            onLikeClick = {
+
+            }
         )
     }
 }

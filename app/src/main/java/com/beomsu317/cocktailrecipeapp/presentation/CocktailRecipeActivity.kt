@@ -21,7 +21,7 @@ import androidx.navigation.navArgument
 import com.beomsu317.cocktailrecipeapp.presentation.category.category_list.CategoryListScreen
 import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info.CocktailInfoScreen
 import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_list.CocktailListScreen
-import com.beomsu317.cocktailrecipeapp.presentation.category.ingredient_detail.IngredientInfoScreen
+import com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail.IngredientInfoScreen
 import com.beomsu317.cocktailrecipeapp.presentation.search.SearchScreen
 import com.beomsu317.cocktailrecipeapp.presentation.ui.theme.CocktailRecipeAppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -80,8 +80,7 @@ class CocktailRecipeActivity : ComponentActivity() {
                             }
                         }
                     }
-                ) {
-                    innerPadding ->
+                ) { innerPadding ->
                     NavHost(
                         navController = rootNavController,
                         startDestination = Screen.SearchScreen.route,
@@ -117,7 +116,8 @@ class CocktailRecipeActivity : ComponentActivity() {
                                     )
                                 ) { navBackStackEntry ->
                                     val category =
-                                        navBackStackEntry.arguments?.getString("category").toString()
+                                        navBackStackEntry.arguments?.getString("category")
+                                            .toString()
                                     CocktailListScreen(
                                         category = category,
                                         onBackClick = {
@@ -175,7 +175,39 @@ class CocktailRecipeActivity : ComponentActivity() {
                             }
                         }
                         composable(Screen.SearchScreen.route) {
-                            SearchScreen(scaffoldState = scaffoldState)
+                            val searchNavController = rememberNavController()
+                            NavHost(
+                                navController = searchNavController,
+                                startDestination = Screen.SearchScreen.route
+                            ) {
+                                composable(Screen.SearchScreen.route) {
+                                    SearchScreen(
+                                        scaffoldState = scaffoldState,
+                                        onIngredientClick = { ingredient ->
+                                            searchNavController.navigate(
+                                                route = "${Screen.IngredientDetailScreen.route}/${
+                                                    ingredient
+                                                }"
+                                            )
+                                        }
+                                    )
+                                }
+                                composable(
+                                    route = "${Screen.IngredientDetailScreen.route}/{ingredient}",
+                                    arguments = listOf(
+                                        navArgument("ingredient") {
+                                            type = NavType.StringType
+                                        }
+                                    )
+                                ) { navBackStackEntry ->
+                                    IngredientInfoScreen(
+                                        onBackClick = {
+                                            searchNavController.popBackStack()
+                                        },
+                                        scaffoldState = scaffoldState
+                                    )
+                                }
+                            }
                         }
                     }
                 }

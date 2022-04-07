@@ -15,9 +15,13 @@ class GetCocktailInfosByNameUseCase @Inject constructor(
 ) {
     operator fun invoke(name: String): Flow<Resource<List<CocktailInfo>>> = flow {
         try {
-            emit(Resource.Loading())
-            val cocktailInfos = repository.getCocktailInfos(name)
-            emit(Resource.Success(cocktailInfos.toCocktailInfos()))
+            emit(Resource.Loading<List<CocktailInfo>>())
+            val cocktailInfos = repository.getCocktailInfos(name).toCocktailInfos()
+            if (cocktailInfos.isEmpty()) {
+                emit(Resource.Error<List<CocktailInfo>>("Nothing exists"))
+            } else {
+                emit(Resource.Success(cocktailInfos))
+            }
         } catch (e: HttpException) {
             emit(Resource.Error<List<CocktailInfo>>(e.localizedMessage))
         } catch (e: IOException) {

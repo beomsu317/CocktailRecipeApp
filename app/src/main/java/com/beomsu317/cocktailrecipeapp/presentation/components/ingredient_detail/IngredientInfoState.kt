@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.category.ingredient_detail
+package com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail
 
 import com.beomsu317.cocktailrecipeapp.domain.model.Ingredient
 

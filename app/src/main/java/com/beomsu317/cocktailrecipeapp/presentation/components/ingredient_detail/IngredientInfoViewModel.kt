@@ -1,5 +1,6 @@
-package com.beomsu317.cocktailrecipeapp.presentation.category.ingredient_detail
+package com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
