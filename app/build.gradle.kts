@@ -85,4 +85,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager-indicators:0.19.0")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
+
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.24.5-alpha")
 }

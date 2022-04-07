@@ -17,7 +17,7 @@ class CocktailRepositoryImpl(
     }
 
     override suspend fun getCocktailInfos(name: String): CocktailInfosDto {
-        return api.getCocktailInfos(name = name)
+        return api.getCocktailInfos(name)
     }
 
     override suspend fun getIngredients(name: String): IngredientsDto {

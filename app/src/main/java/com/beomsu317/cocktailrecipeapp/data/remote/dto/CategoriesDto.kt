@@ -7,9 +7,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CategoriesDto(
     @SerialName("drinks")
-    val drinks: List<DrinkCategory>
+    val drinks: List<DrinkCategory>?
 )
 
 fun CategoriesDto.toCategories(): List<String> {
-    return drinks.map { it.strCategory }
+    return drinks?.let {
+        it.map { it.strCategory }
+    } ?: emptyList()
 }
