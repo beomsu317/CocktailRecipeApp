@@ -1,6 +1,5 @@
-package com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail
+package com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -23,7 +22,7 @@ import coil.request.ImageRequest
 import com.beomsu317.cocktailrecipeapp.common.Constants
 import com.beomsu317.cocktailrecipeapp.domain.model.Ingredient
 import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
-import com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail.components.IngredientInfoTopBar
+import com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail.components.IngredientInfoTopBar
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.fade

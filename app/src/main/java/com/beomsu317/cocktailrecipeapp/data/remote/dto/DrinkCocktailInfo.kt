@@ -9,7 +9,7 @@ data class DrinkCocktailInfo(
     @SerialName("dateModified")
     val dateModified: String?,
     @SerialName("idDrink")
-    val idDrink: String,
+    val idDrink: Int,
     @SerialName("strAlcoholic")
     val strAlcoholic: String?,
     @SerialName("strCategory")

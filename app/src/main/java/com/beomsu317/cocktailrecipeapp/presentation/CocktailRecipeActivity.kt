@@ -22,7 +22,7 @@ import androidx.navigation.navArgument
 import com.beomsu317.cocktailrecipeapp.presentation.category.category_list.CategoryListScreen
 import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info.CocktailInfoScreen
 import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_list.CocktailListScreen
-import com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail.IngredientInfoScreen
+import com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail.IngredientInfoScreen
 import com.beomsu317.cocktailrecipeapp.presentation.search.SearchScreen
 import com.beomsu317.cocktailrecipeapp.presentation.ui.theme.CocktailRecipeAppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi

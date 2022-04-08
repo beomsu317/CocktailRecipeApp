@@ -7,9 +7,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
 import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info.components.CocktailInfoTopBar
 import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
-import com.beomsu317.cocktailrecipeapp.presentation.components.CocktailInfoSection
+import com.beomsu317.cocktailrecipeapp.presentation.common.components.CocktailInfos
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.flow.collectLatest
 
@@ -42,15 +43,34 @@ fun CocktailInfoScreen(
             onBackClick = onBackClick
         )
         Spacer(modifier = Modifier.height(16.dp))
-        CocktailInfoSection(
+        CocktailInfosSection(
             cocktailInfos = state.cocktailInfos,
             isLoading = state.isLoading,
+            ids = state.ids,
             onIngredientClick = onIngredientClick,
-            true,
-            onLikeClick = {
-
+            onLikeClick = { cocktailInfo ->
+                viewModel.onEvent(CocktailInfoEvent.ToggleCocktailInfo(cocktailInfo))
             }
         )
     }
 }
 
+@ExperimentalPagerApi
+@ExperimentalMaterialApi
+@Composable
+fun CocktailInfosSection(
+    cocktailInfos: List<CocktailInfo>,
+    isLoading: Boolean,
+    ids: List<Int>,
+    onIngredientClick: (String) -> Unit,
+    onLikeClick: (CocktailInfo) -> Unit
+) {
+    CocktailInfos(
+        cocktailInfos = cocktailInfos,
+        isLoading = isLoading,
+        onIngredientClick = onIngredientClick,
+        ids = ids,
+        useIndicator = true,
+        onLikeClick = onLikeClick
+    )
+}

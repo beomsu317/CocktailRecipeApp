@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DrinkCocktail(
     @SerialName("idDrink")
-    val idDrink: String,
+    val idDrink: Int,
     @SerialName("strDrink")
     val strDrink: String,
     @SerialName("strDrinkThumb")

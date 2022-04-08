@@ -87,4 +87,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
 
     implementation("com.google.accompanist:accompanist-placeholder-material:0.24.5-alpha")
+
+    implementation("androidx.room:room-runtime:2.4.0")
+    implementation("androidx.room:room-ktx:2.4.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
+    annotationProcessor("androidx.room:room-compiler:2.4.0")
+    kapt("androidx.room:room-compiler:2.4.0")
 }

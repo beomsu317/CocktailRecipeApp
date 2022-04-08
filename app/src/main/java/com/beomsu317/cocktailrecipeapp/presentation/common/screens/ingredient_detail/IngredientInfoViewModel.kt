@@ -1,6 +1,5 @@
-package com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail
+package com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -46,7 +45,11 @@ class IngredientInfoViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    _oneTimeEventChannel.send(OneTimeEvent.Error(result.message ?: "An Unexpected error occured"))
+                    _oneTimeEventChannel.send(
+                        OneTimeEvent.Error(
+                            result.message ?: "An Unexpected error occured"
+                        )
+                    )
                     _state.value = _state.value.copy(isLoading = false)
                 }
                 is Resource.Loading -> {

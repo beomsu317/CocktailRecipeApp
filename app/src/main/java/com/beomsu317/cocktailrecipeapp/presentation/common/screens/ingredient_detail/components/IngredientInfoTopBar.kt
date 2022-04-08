@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.components.ingredient_detail.components
+package com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail.components
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
