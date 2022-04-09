@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.favortes
+package com.beomsu317.cocktailrecipeapp.presentation.favortes.favorites_home
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,11 +16,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(
+class FavoritesHomeViewModel @Inject constructor(
     private val cocktailUseCases: CocktailUseCases
 ) : ViewModel() {
 
-    var state by mutableStateOf(FavoritesState())
+    var state by mutableStateOf(FavoritesHomeState())
         private set
 
     private val _oneTimeEvent = Channel<OneTimeEvent>()
@@ -28,15 +28,25 @@ class FavoritesViewModel @Inject constructor(
 
     private var getMyCocktailsInfoJob: Job? = null
 
+    private var getIdsJob: Job? = null
+
     init {
         getMyCocktails()
+        refreshIds()
     }
 
     private fun getMyCocktails() {
         state = state.copy(isLoading = true)
         getMyCocktailsInfoJob?.cancel()
         getMyCocktailsInfoJob = cocktailUseCases.getMyCocktailsInfoUseCase().onEach {
-            state = state.copy(isLoading = false, cocktailInfos = it)
+            state = state.copy(isLoading = false, cocktailsInfo = it)
+        }.launchIn(viewModelScope)
+    }
+
+    private fun refreshIds() {
+        getIdsJob?.cancel()
+        getIdsJob = cocktailUseCases.getCocktailInfoIdsUseCase().onEach {
+            state = state.copy(ids = it)
         }.launchIn(viewModelScope)
     }
 }

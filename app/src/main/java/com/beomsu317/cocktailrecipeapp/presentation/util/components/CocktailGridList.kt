@@ -19,6 +19,7 @@ import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_list.compo
 fun CocktailGridList(
     cocktails: List<Cocktail>,
     isLoading: Boolean,
+    ids: List<Int>,
     onCocktailClick: (Cocktail) -> Unit
 ) {
     Box(
@@ -31,6 +32,7 @@ fun CocktailGridList(
             items(cocktails) { cocktail ->
                 CocktailGridListItem(
                     cocktail = cocktail,
+                    ids = ids,
                     onCocktailClick = onCocktailClick
                 )
             }

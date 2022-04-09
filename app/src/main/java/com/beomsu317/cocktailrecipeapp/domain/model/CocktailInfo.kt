@@ -11,7 +11,7 @@ data class CocktailInfo(
     val strCategory: String? = "",
     val strDrink: String = "",
     val strGlass: String? = "",
-    val strDrinkThumb: String? = "",
+    val strDrinkThumb: String = "",
     val ingredients: List<Pair<String, String?>> = emptyList(),
     val strInstructions: String? = "",
     val strImageSource: String? = "",
@@ -29,5 +29,13 @@ fun CocktailInfo.toCocktailInfoEntity(): CocktailInfoEntity {
         ingredients = ingredients,
         strInstructions = strInstructions,
         strImageSource = strImageSource
+    )
+}
+
+fun CocktailInfo.toCocktail(): Cocktail {
+    return Cocktail(
+        strDrink = strDrink,
+        strDrinkThumb = strDrinkThumb,
+        idDrink = idDrink
     )
 }

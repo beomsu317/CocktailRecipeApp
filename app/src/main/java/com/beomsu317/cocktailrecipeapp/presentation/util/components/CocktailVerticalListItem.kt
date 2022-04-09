@@ -3,9 +3,13 @@ package com.beomsu317.cocktailrecipeapp.presentation.util.components
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -101,6 +105,7 @@ fun CocktailVerticalListItem(
                     .padding(horizontal = 8.dp, vertical = 16.dp)
                     .weight(0.7f)
             ) {
+                val scrollState = rememberScrollState()
                 Text(
                     text = cocktailInfo.strDrink,
                     style = MaterialTheme.typography.body1,
@@ -114,6 +119,7 @@ fun CocktailVerticalListItem(
                         it.first
                     },
                     style = MaterialTheme.typography.body2,
+                    modifier = Modifier.verticalScroll(scrollState)
                 )
             }
         }

@@ -1,7 +1,9 @@
-package com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info
+package com.beomsu317.cocktailrecipeapp.presentation.util.screens.cocktails_info
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,13 +24,13 @@ import java.net.URLDecoder
 import javax.inject.Inject
 
 @HiltViewModel
-class CocktailInfoViewModel @Inject constructor(
+class CocktailsInfoViewModel @Inject constructor(
     private val cocktailUseCases: CocktailUseCases,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(CocktailInfoState())
-    val state: State<CocktailInfoState> = _state
+    var state by mutableStateOf(CocktailsInfoState())
+        private set
 
     private val _oneTimeEventChannel = Channel<OneTimeEvent>()
     val oneTimeEventFlow = _oneTimeEventChannel.receiveAsFlow()
@@ -37,19 +39,21 @@ class CocktailInfoViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("cocktail")?.let { encodedCocktail ->
-
             val decodedCocktail =
                 Json.decodeFromString<Cocktail>(URLDecoder.decode(encodedCocktail, "UTF-8"))
             getCocktailInfos(decodedCocktail.strDrink)
         }
+        savedStateHandle.get<Boolean>("single")?.let { single ->
+            state = state.copy(single = single)
+        }
         refreshIds()
     }
 
-    fun onEvent(event: CocktailInfoEvent) {
+    fun onEvent(event: CocktailsInfoEvent) {
         when (event) {
-            is CocktailInfoEvent.ToggleCocktailInfo -> {
+            is CocktailsInfoEvent.ToggleCocktailInfo -> {
                 viewModelScope.launch {
-                    if (_state.value.ids.contains(event.cocktailInfo.idDrink)) {
+                    if (state.ids.contains(event.cocktailInfo.idDrink)) {
                         cocktailUseCases.deleteCocktailInfoByIdUseCase(event.cocktailInfo.idDrink)
                     } else {
                         cocktailUseCases.insertCocktailInfoUseCase(event.cocktailInfo)
@@ -63,7 +67,7 @@ class CocktailInfoViewModel @Inject constructor(
     private fun refreshIds() {
         getIdsJob?.cancel()
         getIdsJob = cocktailUseCases.getCocktailInfoIdsUseCase().onEach { ids ->
-            _state.value = _state.value.copy(ids = ids)
+            state = state.copy(ids = ids)
         }.launchIn(viewModelScope)
     }
 
@@ -71,7 +75,7 @@ class CocktailInfoViewModel @Inject constructor(
         cocktailUseCases.getCocktailInfosByNameUseCase(name).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(
+                    state = state.copy(
                         isLoading = false,
                         cocktailInfos = result?.data ?: emptyList()
                     )
@@ -82,10 +86,10 @@ class CocktailInfoViewModel @Inject constructor(
                             result?.message ?: "An unexpected error occured"
                         )
                     )
-                    _state.value = _state.value.copy(isLoading = false)
+                    state = state.copy(isLoading = false)
                 }
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    state = state.copy(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)

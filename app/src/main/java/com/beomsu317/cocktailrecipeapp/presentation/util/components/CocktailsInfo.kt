@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
-import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info.components.CocktailsInfoItem
+import com.beomsu317.cocktailrecipeapp.presentation.util.screens.cocktails_info.components.CocktailsInfoItem
 import com.google.accompanist.pager.*
 import kotlin.math.absoluteValue
 
@@ -16,10 +16,10 @@ import kotlin.math.absoluteValue
 fun CocktailsInfo(
     cocktailsInfo: List<CocktailInfo>,
     isLoading: Boolean,
-    onIngredientClick: (String) -> Unit,
+    useIndicator: Boolean,
     ids: List<Int>,
+    onIngredientClick: (String) -> Unit,
     onLikeClick: (CocktailInfo) -> Unit,
-    useIndicator: Boolean
 ) {
     val pagerState = rememberPagerState()
     Box(

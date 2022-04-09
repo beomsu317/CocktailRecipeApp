@@ -36,7 +36,7 @@ class SearchHomeViewModel @Inject constructor(
     fun onEvent(event: SearchHomeEvent) {
         when (event) {
             is SearchHomeEvent.Search -> {
-                getCocktails(event.name)
+                getCocktails(event.name.trim())
             }
             is SearchHomeEvent.ToggleCocktailInfo -> {
                 viewModelScope.launch {

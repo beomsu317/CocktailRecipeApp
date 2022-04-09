@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info
+package com.beomsu317.cocktailrecipeapp.presentation.util.screens.cocktails_info
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -18,20 +18,24 @@ import kotlinx.coroutines.flow.collectLatest
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
-fun CocktailInfoScreen(
-    onBackClick: () -> Unit,
+fun CocktailsInfoScreen(
+    onNavigateUp: () -> Unit,
     scaffoldState: ScaffoldState,
     onIngredientClick: (String) -> Unit,
-    viewModel: CocktailInfoViewModel = hiltViewModel()
+    viewModel: CocktailsInfoViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val state = viewModel.state
     val oneTimeEventFlow = viewModel.oneTimeEventFlow
 
     LaunchedEffect(key1 = oneTimeEventFlow) {
         oneTimeEventFlow.collectLatest { oneTimeEvent ->
             when (oneTimeEvent) {
                 is OneTimeEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(oneTimeEvent.message, null, SnackbarDuration.Short)
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        oneTimeEvent.message,
+                        null,
+                        SnackbarDuration.Short
+                    )
                 }
             }
         }
@@ -50,7 +54,7 @@ fun CocktailInfoScreen(
             navigationIcon = {
                 IconButton(
                     onClick = {
-                        onBackClick()
+                        onNavigateUp()
                     }
                 ) {
                     Icon(
@@ -63,12 +67,13 @@ fun CocktailInfoScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         CocktailInfosSection(
-            cocktailInfos = state.cocktailInfos,
+            cocktailsInfo = state.cocktailInfos,
             isLoading = state.isLoading,
             ids = state.ids,
+            single = state.single,
             onIngredientClick = onIngredientClick,
             onLikeClick = { cocktailInfo ->
-                viewModel.onEvent(CocktailInfoEvent.ToggleCocktailInfo(cocktailInfo))
+                viewModel.onEvent(CocktailsInfoEvent.ToggleCocktailInfo(cocktailInfo))
             }
         )
     }
@@ -78,18 +83,31 @@ fun CocktailInfoScreen(
 @ExperimentalMaterialApi
 @Composable
 fun CocktailInfosSection(
-    cocktailInfos: List<CocktailInfo>,
+    cocktailsInfo: List<CocktailInfo>,
     isLoading: Boolean,
     ids: List<Int>,
+    single: Boolean,
     onIngredientClick: (String) -> Unit,
     onLikeClick: (CocktailInfo) -> Unit
 ) {
     CocktailsInfo(
-        cocktailsInfo = cocktailInfos,
+        cocktailsInfo = if (single) {
+            if (cocktailsInfo.isNotEmpty()) {
+                listOf(cocktailsInfo.first())
+            } else {
+                emptyList()
+            }
+        } else {
+            cocktailsInfo
+        },
         isLoading = isLoading,
-        onIngredientClick = onIngredientClick,
         ids = ids,
-        useIndicator = true,
+        useIndicator = if (single) {
+            false
+        } else {
+            true
+        },
+        onIngredientClick = onIngredientClick,
         onLikeClick = onLikeClick
     )
 }

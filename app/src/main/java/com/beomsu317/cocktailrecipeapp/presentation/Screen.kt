@@ -6,7 +6,7 @@ import com.beomsu317.cocktailrecipeapp.R
 sealed class CategoryScreen(val route: String) {
     object CategoryListScreen : CategoryScreen("category_list_screen")
     object CocktailListScreen : CategoryScreen("cocktail_list_screen")
-    object CocktailInfoScreen : CategoryScreen("cocktail_info_screen")
+    object CocktailsInfoScreen : CategoryScreen("cocktails_info_screen")
     object IngredientInfoScreen : CategoryScreen("ingredient_info_screen")
 }
 
@@ -18,6 +18,8 @@ sealed class SearchScreen(val route: String) {
 
 sealed class FavoritesScreen(val route: String) {
     object FavoritesHomeScreen : FavoritesScreen("favorites_home_screen")
+    object CocktailInfoScreen : FavoritesScreen("cocktail_info_screen")
+    object IngredientInfoScreen : FavoritesScreen("ingredient_info_screen")
 }
 
 sealed class BottomNavScreen(

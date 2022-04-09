@@ -21,7 +21,7 @@ data class DrinkCocktailInfo(
     @SerialName("strDrinkAlternate")
     val strDrinkAlternate: String?,
     @SerialName("strDrinkThumb")
-    val strDrinkThumb: String?,
+    val strDrinkThumb: String,
     @SerialName("strGlass")
     val strGlass: String?,
     @SerialName("strIBA")

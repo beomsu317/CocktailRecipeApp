@@ -12,7 +12,7 @@ data class CocktailInfoEntity(
     val strCategory: String?,
     val strDrink: String,
     val strGlass: String?,
-    val strDrinkThumb: String?,
+    val strDrinkThumb: String,
     val ingredients: List<Pair<String, String?>>,
     val strInstructions: String?,
     val strImageSource: String?,

@@ -1,7 +1,8 @@
-package com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info.components
+package com.beomsu317.cocktailrecipeapp.presentation.util.screens.cocktails_info.components
 
-import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -29,7 +30,6 @@ import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.fade
-import com.google.accompanist.placeholder.placeholder
 
 @ExperimentalMaterialApi
 @Composable
@@ -73,22 +73,32 @@ fun CocktailsInfoItem(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            SubcomposeAsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(cocktailInfo.strDrinkThumb)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = cocktailInfo.strDrink,
-                contentScale = ContentScale.Fit,
+            Card(
+                border = BorderStroke(
+                    width = 2.dp, color = if (isLoading) {
+                        Color.Transparent
+                    } else {
+                        Color.LightGray
+                    }
+                ),
+                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .weight(0.4f)
-                    .clip(RoundedCornerShape(16.dp))
                     .placeholder(
                         visible = isLoading,
-                        highlight = PlaceholderHighlight.fade(),
-                        shape = RoundedCornerShape(16.dp)
+                        highlight = PlaceholderHighlight.fade()
                     ),
-            )
+                elevation = 16.dp
+            ) {
+                SubcomposeAsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(cocktailInfo.strDrinkThumb)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = cocktailInfo.strDrink,
+                    contentScale = ContentScale.Fit,
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
             Box(
@@ -118,11 +128,12 @@ fun CocktailsInfoItem(
                 ) {
                     Icon(
                         painter = if (ids.contains(cocktailInfo.idDrink)) {
-                            painterResource(id = R.drawable.ic_baseline_thumb_up_24)
+                            painterResource(id = R.drawable.ic_baseline_favorite_24)
                         } else {
-                            painterResource(id = R.drawable.ic_outline_thumb_up_24)
+                            painterResource(id = R.drawable.ic_baseline_favorite_border_24)
                         },
                         contentDescription = "ThumbUpIcon",
+                        tint = MaterialTheme.colors.primary
                     )
                 }
             }
@@ -166,7 +177,8 @@ fun IngredientItem(
         elevation = 4.dp,
         onClick = {
             onIngredientClick(ingredient.first)
-        }
+        },
+        border = BorderStroke(width = 1.dp, color = Color.LightGray)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

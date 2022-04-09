@@ -24,7 +24,7 @@ fun CocktailListScreen(
     onCocktailClick: (Cocktail) -> Unit,
     viewModel: CocktailListViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val state = viewModel.state
 
     LaunchedEffect(key1 = viewModel.oneTimeEventFlow) {
         viewModel.oneTimeEventFlow.collectLatest { oneTimeEvent ->
@@ -64,6 +64,7 @@ fun CocktailListScreen(
         CocktailListSection(
             cocktails = state.cocktails,
             isLoading = state.isLoading,
+            ids = state.ids,
             onCocktailClick = onCocktailClick,
         )
     }
@@ -74,11 +75,13 @@ fun CocktailListScreen(
 fun CocktailListSection(
     cocktails: List<Cocktail>,
     isLoading: Boolean,
+    ids: List<Int>,
     onCocktailClick: (Cocktail) -> Unit
 ) {
     CocktailGridList(
         cocktails = cocktails,
         isLoading = isLoading,
+        ids = ids,
         onCocktailClick = onCocktailClick
     )
 }
