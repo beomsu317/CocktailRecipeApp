@@ -57,7 +57,7 @@ dependencies {
 
     implementation(Compose.ui)
     implementation(Compose.material)
-    implementation("androidx.compose.ui:ui-util:1.1.1")
+    implementation(Compose.uiUtil)
     implementation(Compose.uiTooling)
     implementation(Compose.uiToolingPreview)
     implementation(Compose.activityCompose)
@@ -71,26 +71,21 @@ dependencies {
     kapt(DaggerHilt.hiltCompiler)
 
     implementation(Serialization.kotlinxSerialization)
+    implementation(Serialization.retrofit2KotlinxSerializationConverter)
 
     implementation(Network.retrofit)
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation(Network.okhttp)
 
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.24.5-alpha")
-    implementation("com.google.accompanist:accompanist-swiperefresh:0.24.5-alpha")
+    implementation(Accompanist.systemUiController)
+    implementation(Accompanist.pager)
+    implementation(Accompanist.pagerIndicator)
+    implementation(Accompanist.placeholderMaterial)
 
-    implementation("io.coil-kt:coil-compose:2.0.0-rc02")
+    implementation(Coil.coil)
 
-    implementation("com.google.accompanist:accompanist-pager:0.19.0")
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.19.0")
-
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
-
-    implementation("com.google.accompanist:accompanist-placeholder-material:0.24.5-alpha")
-
-    implementation("androidx.room:room-runtime:2.4.0")
-    implementation("androidx.room:room-ktx:2.4.0")
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
-    annotationProcessor("androidx.room:room-compiler:2.4.0")
-    kapt("androidx.room:room-compiler:2.4.0")
+    implementation(Room.roomRuntime)
+    implementation(Room.roomKtx)
+    annotationProcessor(Room.roomCompiler)
+    kapt(Room.roomCompiler)
+    implementation(Room.runtimeLivedata)
 }
