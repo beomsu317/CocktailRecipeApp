@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -168,6 +169,7 @@ fun IngredientDescriptionSection(
                 text = ingredient.strIngredient,
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.Bold,
+                color = Color.Black
             )
 
             val scrollState = rememberScrollState()
@@ -182,7 +184,8 @@ fun IngredientDescriptionSection(
 
                 Text(
                     text = ingredient.strDescription ?: "No description.",
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.body1,
+                    color = Color.Black
                 )
             }
         }

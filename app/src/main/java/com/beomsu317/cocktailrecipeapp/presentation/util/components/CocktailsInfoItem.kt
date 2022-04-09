@@ -117,7 +117,8 @@ fun CocktailsInfoItem(
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(horizontal = 48.dp),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = Color.Black
                 )
                 IconButton(
                     onClick = {
@@ -215,7 +216,8 @@ fun IngredientItem(
                     .placeholder(
                         visible = isLoading,
                         highlight = PlaceholderHighlight.fade(),
-                    )
+                    ),
+                color = Color.Black
             )
         }
     }

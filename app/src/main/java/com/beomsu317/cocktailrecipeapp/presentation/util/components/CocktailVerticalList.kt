@@ -17,6 +17,7 @@ import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
 fun CocktailVerticalList(
     cocktailInfos: List<CocktailInfo>,
     isLoading: Boolean,
+    ids: List<Int>,
     onCocktailClick: (CocktailInfo) -> Unit
 ) {
     Box(
@@ -26,6 +27,7 @@ fun CocktailVerticalList(
             items(cocktailInfos) { cocktailInfo ->
                 CocktailVerticalListItem(
                     cocktailInfo = cocktailInfo,
+                    ids = ids,
                     onCocktailClick = onCocktailClick,
                 )
             }

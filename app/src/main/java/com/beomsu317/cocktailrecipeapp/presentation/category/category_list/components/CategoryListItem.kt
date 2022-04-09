@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -31,7 +32,7 @@ fun CategoryListItem(
                 text = category,
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp, start = 16.dp),
                 style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onBackground,
+                color = Color.Black,
             )
             IconButton(
                 onClick = {
@@ -42,7 +43,7 @@ fun CategoryListItem(
                 Icon(
                     imageVector = Icons.Filled.ArrowForward,
                     contentDescription = "ArrowForward",
-                    tint = MaterialTheme.colors.onBackground
+                    tint = MaterialTheme.colors.primary
                 )
             }
         }

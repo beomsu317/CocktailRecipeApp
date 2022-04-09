@@ -8,43 +8,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
-//    primary = BrightGreen,
-//    primaryVariant = DarkGreen,
-//    secondary = Orange,
-//    background = MediumGray,
-//    onBackground = TextWhite,
-//    surface = LightGray,
-//    onSurface = TextWhite,
-//    onPrimary = Color.White,
-//    onSecondary = Color.White,
-)
-
 private val LightColorPalette = lightColors(
-//    primary = BrightGreen,
-//    primaryVariant = DarkGreen,
-//    secondary = Orange,
-//    background = MediumGray,
-//    onBackground = TextWhite,
+    primary = Color(0xff870d4c),
+    primaryVariant = Color(0xff550024),
+    onPrimary = Color(0xffffffff),
+    secondary = Color(0xffff80ab),
+    onSecondary = Color(0xff000000),
+    background = Color.White,
+    onBackground = Color(0xff870d4d),
 //    surface = LightGray,
 //    onSurface = TextWhite,
-//    onPrimary = Color.White,
-//    onSecondary = Color.White,
 )
 
 @Composable
 fun CocktailRecipeAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+    val colors = LightColorPalette
 
     val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(color = MaterialTheme.colors.primaryVariant)
+    systemUiController.setSystemBarsColor(color = colors.primaryVariant)
 
     MaterialTheme(
         colors = colors,

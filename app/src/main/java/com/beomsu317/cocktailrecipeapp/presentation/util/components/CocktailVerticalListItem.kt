@@ -10,22 +10,22 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.layout.ContentScale.Companion.Fit
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.beomsu317.cocktailrecipeapp.R
 import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.fade
@@ -36,6 +36,7 @@ import com.google.accompanist.placeholder.placeholder
 @Composable
 fun CocktailVerticalListItem(
     cocktailInfo: CocktailInfo,
+    ids: List<Int>,
     onCocktailClick: (CocktailInfo) -> Unit
 ) {
     var isLoading by remember {
@@ -106,13 +107,26 @@ fun CocktailVerticalListItem(
                     .weight(0.7f)
             ) {
                 val scrollState = rememberScrollState()
-                Text(
-                    text = cocktailInfo.strDrink,
-                    style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Row(
+                   modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = cocktailInfo.strDrink,
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                    )
+                    if (ids.contains(cocktailInfo.idDrink)) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_favorite_24),
+                            contentDescription = "Favorite",
+                            tint = MaterialTheme.colors.primary,
+                        )
+                    }
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = cocktailInfo.ingredients.joinToString {

@@ -61,6 +61,7 @@ fun SearchHomeScreen(
         CocktailInfoSection(
             cocktailInfos = state.cocktails,
             isLoading = state.isLoading,
+            ids = state.ids,
             onCocktailClick = onCocktailClick
         )
     }
@@ -117,11 +118,13 @@ fun SearchSection(
 fun CocktailInfoSection(
     cocktailInfos: List<CocktailInfo>,
     isLoading: Boolean,
+    ids: List<Int>,
     onCocktailClick: (CocktailInfo) -> Unit
 ) {
     CocktailVerticalList(
         cocktailInfos = cocktailInfos,
         isLoading = isLoading,
+        ids = ids,
         onCocktailClick = onCocktailClick
     )
 }
