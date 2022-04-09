@@ -65,7 +65,8 @@ object AppModule {
             getCocktailsByCategoryUseCase = GetCocktailsByCategoryUseCase(repository),
             getIngredientByNameUseCase = GetIngredientByNameUseCase(repository),
             insertCocktailInfoUseCase = InsertCocktailInfoUseCase(repository),
-            deleteCocktailInfoByIdUseCase = DeleteCocktailInfoByIdUseCase(repository)
+            deleteCocktailInfoByIdUseCase = DeleteCocktailInfoByIdUseCase(repository),
+            getMyCocktailsInfoUseCase = GetMyCocktailsInfoUseCase(repository)
         )
     }
 }

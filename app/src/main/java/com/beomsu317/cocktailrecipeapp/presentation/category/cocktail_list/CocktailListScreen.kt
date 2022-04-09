@@ -1,20 +1,18 @@
 package com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_list
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beomsu317.cocktailrecipeapp.domain.model.Cocktail
-import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_list.components.CocktailItem
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.components.CocktailGridList
 import kotlinx.coroutines.flow.collectLatest
 
 @ExperimentalMaterialApi
@@ -31,7 +29,7 @@ fun CocktailListScreen(
     LaunchedEffect(key1 = viewModel.oneTimeEventFlow) {
         viewModel.oneTimeEventFlow.collectLatest { oneTimeEvent ->
             when (oneTimeEvent) {
-                is OneTimeEvent.Error -> {
+                is OneTimeEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         oneTimeEvent.message,
                         null,
@@ -46,11 +44,24 @@ fun CocktailListScreen(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CocktailListTopBar(
-            category = category,
-            onBackClick = onBackClick
+        TopAppBar(
+            title = { Text(text = category) },
+            backgroundColor = MaterialTheme.colors.primary,
+            navigationIcon = {
+                IconButton(
+                    onClick = {
+                        onBackClick()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "ArrowBack",
+                        tint = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
         )
-        CocktailSection(
+        CocktailListSection(
             cocktails = state.cocktails,
             isLoading = state.isLoading,
             onCocktailClick = onCocktailClick,
@@ -60,31 +71,14 @@ fun CocktailListScreen(
 
 @ExperimentalMaterialApi
 @Composable
-fun CocktailSection(
+fun CocktailListSection(
     cocktails: List<Cocktail>,
     isLoading: Boolean,
     onCocktailClick: (Cocktail) -> Unit
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            items(cocktails) { cocktail ->
-                CocktailItem(
-                    cocktail = cocktail,
-                    onCocktailClick = onCocktailClick
-                )
-            }
-        }
-
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = MaterialTheme.colors.onBackground
-            )
-        }
-    }
+    CocktailGridList(
+        cocktails = cocktails,
+        isLoading = isLoading,
+        onCocktailClick = onCocktailClick
+    )
 }

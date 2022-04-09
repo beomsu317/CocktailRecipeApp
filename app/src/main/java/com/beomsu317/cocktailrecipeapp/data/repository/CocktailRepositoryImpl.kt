@@ -40,7 +40,7 @@ class CocktailRepositoryImpl(
         return dao.getCocktailInfoIds()
     }
 
-    override fun getMyCocktailinfo(): Flow<List<CocktailInfoEntity>> {
+    override fun getMyCocktailsInfoEntities(): Flow<List<CocktailInfoEntity>> {
         return dao.getMyCocktailinfo()
     }
 }

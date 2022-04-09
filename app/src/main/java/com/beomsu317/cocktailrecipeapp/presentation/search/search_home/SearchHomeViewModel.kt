@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.search
+package com.beomsu317.cocktailrecipeapp.presentation.search.search_home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beomsu317.cocktailrecipeapp.common.Resource
 import com.beomsu317.cocktailrecipeapp.domain.use_case.*
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -17,12 +17,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class SearchHomeViewModel @Inject constructor(
     private val cocktailUseCases: CocktailUseCases,
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(SearchState())
-    val state: State<SearchState> = _state
+    private val _state = mutableStateOf(SearchHomeState())
+    val state: State<SearchHomeState> = _state
 
     private val _oneTimeEventChannel = Channel<OneTimeEvent>()
     val oneTimeEventFlow = _oneTimeEventChannel.receiveAsFlow()
@@ -33,12 +33,12 @@ class SearchViewModel @Inject constructor(
         refreshIds()
     }
 
-    fun onEvent(event: SearchEvent) {
+    fun onEvent(event: SearchHomeEvent) {
         when (event) {
-            is SearchEvent.Search -> {
+            is SearchHomeEvent.Search -> {
                 getCocktails(event.name)
             }
-            is SearchEvent.ToggleCocktailInfo -> {
+            is SearchHomeEvent.ToggleCocktailInfo -> {
                 viewModelScope.launch {
                     if (_state.value.ids.contains(event.cocktailInfo.idDrink)) {
                         cocktailUseCases.deleteCocktailInfoByIdUseCase(event.cocktailInfo.idDrink)
@@ -56,7 +56,7 @@ class SearchViewModel @Inject constructor(
 
         if (name.isEmpty()) {
             viewModelScope.launch {
-                _oneTimeEventChannel.send(OneTimeEvent.Error("String is empty"))
+                _oneTimeEventChannel.send(OneTimeEvent.ShowSnackbar("String is empty"))
             }
             return
         }
@@ -71,7 +71,7 @@ class SearchViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _oneTimeEventChannel.send(
-                        OneTimeEvent.Error(
+                        OneTimeEvent.ShowSnackbar(
                             result.message ?: "An unexpected error occured"
                         )
                     )

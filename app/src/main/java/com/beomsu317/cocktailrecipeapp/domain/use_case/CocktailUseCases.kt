@@ -7,5 +7,6 @@ data class CocktailUseCases(
     val getCocktailsByCategoryUseCase: GetCocktailsByCategoryUseCase,
     val getIngredientByNameUseCase: GetIngredientByNameUseCase,
     val insertCocktailInfoUseCase: InsertCocktailInfoUseCase,
-    val deleteCocktailInfoByIdUseCase: DeleteCocktailInfoByIdUseCase
+    val deleteCocktailInfoByIdUseCase: DeleteCocktailInfoByIdUseCase,
+    val getMyCocktailsInfoUseCase: GetMyCocktailsInfoUseCase
 )

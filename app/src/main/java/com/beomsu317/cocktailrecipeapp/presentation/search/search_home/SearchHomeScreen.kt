@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.search
+package com.beomsu317.cocktailrecipeapp.presentation.search.search_home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -15,9 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beomsu317.cocktailrecipeapp.R
 import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
-import com.beomsu317.cocktailrecipeapp.presentation.common.components.CocktailInfos
-import com.beomsu317.cocktailrecipeapp.presentation.search.components.SearchTopBar
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.components.CocktailVerticalList
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.flow.collectLatest
 
@@ -25,17 +24,17 @@ import kotlinx.coroutines.flow.collectLatest
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
-fun SearchScreen(
+fun SearchHomeScreen(
     scaffoldState: ScaffoldState,
-    onIngredientClick: (String) -> Unit,
-    viewModel: SearchViewModel = hiltViewModel()
+    onCocktailClick: (CocktailInfo) -> Unit,
+    viewModel: SearchHomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     val oneTimeEventFlow = viewModel.oneTimeEventFlow
     LaunchedEffect(key1 = oneTimeEventFlow) {
         oneTimeEventFlow.collectLatest { oneTimeEvent ->
             when (oneTimeEvent) {
-                is OneTimeEvent.Error -> {
+                is OneTimeEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         oneTimeEvent.message,
                         null,
@@ -49,20 +48,20 @@ fun SearchScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        SearchTopBar()
+        TopAppBar(
+            modifier = Modifier.fillMaxWidth(),
+            title = { Text(text = "Search") },
+            backgroundColor = MaterialTheme.colors.primary,
+        )
         SearchSection(
             name = state.name,
             onSearch = { name ->
-                viewModel.onEvent(SearchEvent.Search(name))
+                viewModel.onEvent(SearchHomeEvent.Search(name))
             })
         CocktailInfoSection(
             cocktailInfos = state.cocktails,
             isLoading = state.isLoading,
-            onIngredientClick = onIngredientClick,
-            ids = state.ids,
-            onLikeClick = { cocktailInfo ->
-                viewModel.onEvent(SearchEvent.ToggleCocktailInfo(cocktailInfo))
-            }
+            onCocktailClick = onCocktailClick
         )
     }
 }
@@ -71,7 +70,7 @@ fun SearchScreen(
 @Composable
 fun SearchSection(
     name: String,
-    onSearch: (String) -> Unit
+    onSearch: (String) -> Unit,
 ) {
     var name by remember {
         mutableStateOf(name)
@@ -118,20 +117,11 @@ fun SearchSection(
 fun CocktailInfoSection(
     cocktailInfos: List<CocktailInfo>,
     isLoading: Boolean,
-    onIngredientClick: (String) -> Unit,
-    ids: List<Int>,
-    onLikeClick: (CocktailInfo) -> Unit
+    onCocktailClick: (CocktailInfo) -> Unit
 ) {
-    CocktailInfos(
+    CocktailVerticalList(
         cocktailInfos = cocktailInfos,
         isLoading = isLoading,
-        onIngredientClick = onIngredientClick,
-        ids = ids,
-        useIndicator = false,
-        onLikeClick = { cocktailInfo ->
-            onLikeClick(cocktailInfo)
-        },
-        modifier = Modifier
-            .fillMaxSize()
+        onCocktailClick = onCocktailClick
     )
 }

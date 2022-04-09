@@ -33,7 +33,7 @@ import com.google.accompanist.placeholder.placeholder
 
 @ExperimentalMaterialApi
 @Composable
-fun CocktailInfoItem(
+fun CocktailsInfoItem(
     cocktailInfo: CocktailInfo,
     pageOffset: Float,
     onIngredientClick: (String) -> Unit,

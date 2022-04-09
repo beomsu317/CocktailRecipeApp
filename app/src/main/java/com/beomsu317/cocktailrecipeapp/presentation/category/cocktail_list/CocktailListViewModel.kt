@@ -8,14 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beomsu317.cocktailrecipeapp.common.Resource
 import com.beomsu317.cocktailrecipeapp.domain.use_case.CocktailUseCases
-import com.beomsu317.cocktailrecipeapp.domain.use_case.GetCocktailsByCategoryUseCase
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,7 +46,7 @@ class CocktailListViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _oneTimeEventChannel.send(
-                        OneTimeEvent.Error(
+                        OneTimeEvent.ShowSnackbar(
                             result?.message ?: "An unexpected error occured"
                         )
                     )

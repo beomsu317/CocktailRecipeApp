@@ -26,7 +26,7 @@ import com.google.accompanist.placeholder.material.fade
 
 @ExperimentalMaterialApi
 @Composable
-fun CocktailItem(
+fun CocktailGridListItem(
     cocktail: Cocktail,
     onCocktailClick: (Cocktail) -> Unit
 ) {
@@ -69,7 +69,7 @@ fun CocktailItem(
                                 Color.White,
                                 Color.Black
                             ),
-                            startY = size.height / 3,
+                            startY = size.height / 2f,
                             endY = size.height
                         )
                         onDrawWithContent {

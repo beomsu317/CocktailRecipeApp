@@ -2,15 +2,16 @@ package com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
-import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info.components.CocktailInfoTopBar
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
-import com.beomsu317.cocktailrecipeapp.presentation.common.components.CocktailInfos
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.components.CocktailsInfo
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.flow.collectLatest
 
@@ -29,7 +30,7 @@ fun CocktailInfoScreen(
     LaunchedEffect(key1 = oneTimeEventFlow) {
         oneTimeEventFlow.collectLatest { oneTimeEvent ->
             when (oneTimeEvent) {
-                is OneTimeEvent.Error -> {
+                is OneTimeEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(oneTimeEvent.message, null, SnackbarDuration.Short)
                 }
             }
@@ -39,8 +40,26 @@ fun CocktailInfoScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        CocktailInfoTopBar(
-            onBackClick = onBackClick
+        TopAppBar(
+            modifier = Modifier.fillMaxWidth(),
+            title = {
+                Text(
+                    text = "Cocktail Info"
+                )
+            },
+            navigationIcon = {
+                IconButton(
+                    onClick = {
+                        onBackClick()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "ArrowBack",
+                        tint = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
         )
         Spacer(modifier = Modifier.height(16.dp))
         CocktailInfosSection(
@@ -65,8 +84,8 @@ fun CocktailInfosSection(
     onIngredientClick: (String) -> Unit,
     onLikeClick: (CocktailInfo) -> Unit
 ) {
-    CocktailInfos(
-        cocktailInfos = cocktailInfos,
+    CocktailsInfo(
+        cocktailsInfo = cocktailInfos,
         isLoading = isLoading,
         onIngredientClick = onIngredientClick,
         ids = ids,

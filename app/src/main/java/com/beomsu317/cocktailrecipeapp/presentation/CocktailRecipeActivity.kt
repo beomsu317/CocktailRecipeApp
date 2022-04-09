@@ -21,9 +21,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.beomsu317.cocktailrecipeapp.presentation.category.category_list.CategoryListScreen
 import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info.CocktailInfoScreen
+import com.beomsu317.cocktailrecipeapp.presentation.search.cocktail_info.CocktailInfoScreen
 import com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_list.CocktailListScreen
-import com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail.IngredientInfoScreen
-import com.beomsu317.cocktailrecipeapp.presentation.search.SearchScreen
+import com.beomsu317.cocktailrecipeapp.presentation.util.screens.ingredient_info.IngredientInfoScreen
+import com.beomsu317.cocktailrecipeapp.presentation.favortes.FavoritesScreen
+import com.beomsu317.cocktailrecipeapp.presentation.search.search_home.SearchHomeScreen
 import com.beomsu317.cocktailrecipeapp.presentation.ui.theme.CocktailRecipeAppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +59,13 @@ class CocktailRecipeActivity : ComponentActivity() {
                                 BottomNavigationItem(
                                     icon = {
                                         Icon(
-                                            painter = painterResource(id = screen.resId),
+                                            painter = painterResource(
+                                                id = if (isSelected == true) {
+                                                    screen.selectedResId
+                                                } else {
+                                                    screen.unselectedResId
+                                                }
+                                            ),
                                             contentDescription = screen.label
                                         )
                                     },
@@ -86,21 +94,21 @@ class CocktailRecipeActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = rootNavController,
-                        startDestination = Screen.SearchScreen.route,
+                        startDestination = BottomNavScreen.SearchScreen.route,
                         modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())
                     ) {
-                        composable(Screen.CategoryScreen.route) {
+                        composable(BottomNavScreen.CategoryScreen.route) {
                             val categoryNavController = rememberNavController()
                             NavHost(
                                 navController = categoryNavController,
-                                startDestination = Screen.CategoryListScreen.route
+                                startDestination = CategoryScreen.CategoryListScreen.route
                             ) {
-                                composable(route = Screen.CategoryListScreen.route) {
+                                composable(route = CategoryScreen.CategoryListScreen.route) {
                                     CategoryListScreen(
                                         scaffoldState = scaffoldState,
                                         onCategoryClick = { category ->
                                             categoryNavController.navigate(
-                                                "${Screen.CocktailListScreen.route}/${
+                                                route = "${CategoryScreen.CocktailListScreen.route}/${
                                                     category.replace(
                                                         "/",
                                                         "%2f"
@@ -111,7 +119,7 @@ class CocktailRecipeActivity : ComponentActivity() {
                                     )
                                 }
                                 composable(
-                                    route = "${Screen.CocktailListScreen.route}/{category}",
+                                    route = "${CategoryScreen.CocktailListScreen.route}/{category}",
                                     arguments = listOf(
                                         navArgument("category") {
                                             type = NavType.StringType
@@ -132,7 +140,7 @@ class CocktailRecipeActivity : ComponentActivity() {
                                                 cocktail
                                             )
                                             categoryNavController.navigate(
-                                                "${Screen.CocktailInfoScreen.route}/${
+                                                route = "${CategoryScreen.CocktailInfoScreen.route}/${
                                                     URLEncoder.encode(encodedCocktail, "UTF-8")
                                                 }"
                                             )
@@ -140,7 +148,7 @@ class CocktailRecipeActivity : ComponentActivity() {
                                     )
                                 }
                                 composable(
-                                    route = "${Screen.CocktailInfoScreen.route}/{cocktail}",
+                                    route = "${CategoryScreen.CocktailInfoScreen.route}/{cocktail}",
                                     arguments = listOf(
                                         navArgument("cocktail") {
                                             type = NavType.StringType
@@ -154,7 +162,7 @@ class CocktailRecipeActivity : ComponentActivity() {
                                         scaffoldState = scaffoldState,
                                         onIngredientClick = { ingredient ->
                                             categoryNavController.navigate(
-                                                "${Screen.IngredientDetailScreen.route}/${
+                                                route = "${CategoryScreen.IngredientInfoScreen.route}/${
                                                     URLEncoder.encode(ingredient, "UTF-8")
                                                 }"
                                             )
@@ -162,7 +170,7 @@ class CocktailRecipeActivity : ComponentActivity() {
                                     )
                                 }
                                 composable(
-                                    route = "${Screen.IngredientDetailScreen.route}/{ingredient}",
+                                    route = "${CategoryScreen.IngredientInfoScreen.route}/{ingredient}",
                                     arguments = listOf(
                                         navArgument("ingredient") {
                                             type = NavType.StringType
@@ -178,26 +186,53 @@ class CocktailRecipeActivity : ComponentActivity() {
                                 }
                             }
                         }
-                        composable(Screen.SearchScreen.route) {
+                        composable(BottomNavScreen.SearchScreen.route) {
                             val searchNavController = rememberNavController()
                             NavHost(
                                 navController = searchNavController,
-                                startDestination = Screen.SearchScreen.route
+                                startDestination = SearchScreen.SearchHomeScreen.route
                             ) {
-                                composable(Screen.SearchScreen.route) {
-                                    SearchScreen(
+                                composable(SearchScreen.SearchHomeScreen.route) {
+                                    SearchHomeScreen(
                                         scaffoldState = scaffoldState,
-                                        onIngredientClick = { ingredient ->
+                                        onCocktailClick = { cocktailInfo ->
+                                            val cocktailInfoStr = Json.encodeToString(cocktailInfo)
                                             searchNavController.navigate(
-                                                route = "${Screen.IngredientDetailScreen.route}/${
-                                                    URLEncoder.encode(ingredient, "UTF-8")
+                                                route = "${SearchScreen.CocktailInfoScreen.route}/${
+                                                    URLEncoder.encode(
+                                                        cocktailInfoStr,
+                                                        "UTF-8"
+                                                    )
                                                 }"
                                             )
                                         }
                                     )
                                 }
                                 composable(
-                                    route = "${Screen.IngredientDetailScreen.route}/{ingredient}",
+                                    route = "${SearchScreen.CocktailInfoScreen.route}/{cocktailInfo}",
+                                    arguments = listOf(
+                                        navArgument("cocktailInfo") {
+                                            type = NavType.StringType
+                                        }
+                                    )
+                                ) {
+                                    CocktailInfoScreen(
+                                        onNavigateUp = {
+                                            searchNavController.popBackStack()
+                                        },
+                                        onIngredientClick = { ingredient ->
+                                            searchNavController.navigate(
+                                                route = "${SearchScreen.IngredientInfoScreen.route}/${
+                                                    URLEncoder.encode(
+                                                        ingredient,
+                                                        "UTF-8"
+                                                    )
+                                                }"
+                                            )
+                                        })
+                                }
+                                composable(
+                                    route = "${SearchScreen.IngredientInfoScreen.route}/{ingredient}",
                                     arguments = listOf(
                                         navArgument("ingredient") {
                                             type = NavType.StringType
@@ -210,6 +245,17 @@ class CocktailRecipeActivity : ComponentActivity() {
                                         },
                                         scaffoldState = scaffoldState
                                     )
+                                }
+                            }
+                        }
+                        composable(BottomNavScreen.FavoritesScreen.route) {
+                            val favoritesNavController = rememberNavController()
+                            NavHost(
+                                navController = favoritesNavController,
+                                startDestination = FavoritesScreen.FavoritesHomeScreen.route
+                            ) {
+                                composable(route = FavoritesScreen.FavoritesHomeScreen.route) {
+                                    FavoritesScreen()
                                 }
                             }
                         }

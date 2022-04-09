@@ -27,5 +27,5 @@ interface CocktailRepository {
 
     fun getCocktailInfoIds(): Flow<List<Int>>
 
-    fun getMyCocktailinfo(): Flow<List<CocktailInfoEntity>>
+    fun getMyCocktailsInfoEntities(): Flow<List<CocktailInfoEntity>>
 }

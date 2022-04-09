@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail
+package com.beomsu317.cocktailrecipeapp.presentation.util.screens.ingredient_info
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.beomsu317.cocktailrecipeapp.common.Resource
 import com.beomsu317.cocktailrecipeapp.domain.model.Ingredient
 import com.beomsu317.cocktailrecipeapp.domain.use_case.GetIngredientByNameUseCase
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
@@ -46,7 +46,7 @@ class IngredientInfoViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _oneTimeEventChannel.send(
-                        OneTimeEvent.Error(
+                        OneTimeEvent.ShowSnackbar(
                             result.message ?: "An Unexpected error occured"
                         )
                     )

@@ -1,4 +1,4 @@
-package com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail
+package com.beomsu317.cocktailrecipeapp.presentation.util.screens.ingredient_info
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -6,6 +6,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
@@ -21,8 +23,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.beomsu317.cocktailrecipeapp.common.Constants
 import com.beomsu317.cocktailrecipeapp.domain.model.Ingredient
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
-import com.beomsu317.cocktailrecipeapp.presentation.common.screens.ingredient_detail.components.IngredientInfoTopBar
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.fade
@@ -40,7 +41,7 @@ fun IngredientInfoScreen(
     LaunchedEffect(key1 = oneTimeEventFlow) {
         oneTimeEventFlow.collectLatest { oneTimeEvent ->
             when (oneTimeEvent) {
-                is OneTimeEvent.Error -> {
+                is OneTimeEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         oneTimeEvent.message,
                         null,
@@ -55,7 +56,26 @@ fun IngredientInfoScreen(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        IngredientInfoTopBar(onBackClick = onBackClick)
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Ingredient"
+                )
+            },
+            navigationIcon = {
+                IconButton(
+                    onClick = {
+                        onBackClick()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "ArrowBack",
+                        tint = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
+        )
         Spacer(modifier = Modifier.height(16.dp))
         IngredientImageSection(
             ingredient = state.ingredient,

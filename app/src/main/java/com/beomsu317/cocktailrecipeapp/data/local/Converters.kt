@@ -13,6 +13,6 @@ class Converters {
 
     @TypeConverter
     fun toListWithStringPair(value: String): List<Pair<String, String?>> {
-        return Json.decodeFromString<List<Pair<String, String>>>(value)
+        return Json.decodeFromString<List<Pair<String, String?>>>(value)
     }
 }

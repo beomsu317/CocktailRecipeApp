@@ -1,6 +1,5 @@
 package com.beomsu317.cocktailrecipeapp.presentation.category.cocktail_info
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -9,8 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.beomsu317.cocktailrecipeapp.common.Resource
 import com.beomsu317.cocktailrecipeapp.domain.model.Cocktail
 import com.beomsu317.cocktailrecipeapp.domain.use_case.CocktailUseCases
-import com.beomsu317.cocktailrecipeapp.domain.use_case.GetCocktailInfosByNameUseCase
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -80,7 +78,7 @@ class CocktailInfoViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _oneTimeEventChannel.send(
-                        OneTimeEvent.Error(
+                        OneTimeEvent.ShowSnackbar(
                             result?.message ?: "An unexpected error occured"
                         )
                     )

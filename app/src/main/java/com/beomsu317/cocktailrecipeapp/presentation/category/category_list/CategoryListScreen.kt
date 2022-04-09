@@ -9,10 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beomsu317.cocktailrecipeapp.presentation.category.category_list.components.CategoryListItem
-import com.beomsu317.cocktailrecipeapp.presentation.common.OneTimeEvent
+import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -27,7 +26,7 @@ fun CategoryListScreen(
     LaunchedEffect(key1 = oneTimeEventFlow) {
         viewModel.oneTimeEventFlow.collectLatest { oneTimeEvent ->
             when (oneTimeEvent) {
-                is OneTimeEvent.Error -> {
+                is OneTimeEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = oneTimeEvent.message,
                         actionLabel = null,
@@ -39,11 +38,16 @@ fun CategoryListScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        CategoryListTopBar()
-        Spacer(modifier = Modifier.height(16.dp))
+        TopAppBar(
+            title = { Text(text = "Category") },
+            modifier = Modifier.fillMaxWidth(),
+            backgroundColor = MaterialTheme.colors.primary,
+        )
         CategotySection(
             onCategoryClick = onCategoryClick,
             categories = state.categories,
@@ -60,7 +64,8 @@ fun CategotySection(
     isLoading: Boolean
 ) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
         LazyColumn(
             modifier = Modifier
