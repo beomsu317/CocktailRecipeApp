@@ -117,7 +117,7 @@ fun CocktailVerticalListItem(
                         style = MaterialTheme.typography.body1,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier
+                        color = Color.Black
                     )
                     if (ids.contains(cocktailInfo.idDrink)) {
                         Icon(
@@ -133,7 +133,8 @@ fun CocktailVerticalListItem(
                         it.first
                     },
                     style = MaterialTheme.typography.body2,
-                    modifier = Modifier.verticalScroll(scrollState)
+                    modifier = Modifier.verticalScroll(scrollState),
+                    color = Color.Black
                 )
             }
         }
