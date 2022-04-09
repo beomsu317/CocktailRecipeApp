@@ -78,7 +78,7 @@ fun CocktailsInfoItem(
                     width = 2.dp, color = if (isLoading) {
                         Color.Transparent
                     } else {
-                        Color.LightGray
+                        MaterialTheme.colors.primary
                     }
                 ),
                 shape = RoundedCornerShape(16.dp),
@@ -194,6 +194,7 @@ fun IngredientItem(
                     .build(),
                 contentDescription = ingredient.first,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .height(150.dp)
                     .placeholder(
                         visible = isLoading,
@@ -205,6 +206,9 @@ fun IngredientItem(
                 },
                 onSuccess = {
                     isLoading = false
+                },
+                onError = {
+                    isLoading = false
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -213,6 +217,7 @@ fun IngredientItem(
                 style = MaterialTheme.typography.body1,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .placeholder(
                         visible = isLoading,
                         highlight = PlaceholderHighlight.fade(),

@@ -46,7 +46,7 @@ fun CocktailGridListItem(
         onClick = {
             onCocktailClick(cocktail)
         },
-        border = BorderStroke(width = 1.dp, color = Color.Gray)
+        border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.primary)
     ) {
         Box(
             modifier = Modifier
