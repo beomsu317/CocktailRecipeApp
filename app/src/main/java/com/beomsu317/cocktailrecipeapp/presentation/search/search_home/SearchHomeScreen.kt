@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -105,9 +106,18 @@ fun SearchSection(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
             ),
-            keyboardActions = KeyboardActions(onDone = {
-                keyboardController?.hide()
-            })
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    keyboardController?.hide()
+                },
+            ),
+            placeholder = {
+                Text(text = "Search cocktails")
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = Color.Black,
+                backgroundColor = MaterialTheme.colors.background
+            )
         )
     }
 }
