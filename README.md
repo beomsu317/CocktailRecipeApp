@@ -1,7 +1,6 @@
 # Cocktail Recipe App
 
-<img src="media/category.png" width="30%">&nbsp;&nbsp;<img src="media/cocktail_list.png" width="30%">&nbsp;&nbsp;<img src="media/cocktail_info.png" width="30%">
-<img src="media/ingredient.png" width="30%">&nbsp;&nbsp;<img src="media/search.png" width="30%">&nbsp;&nbsp;<img src="media/favorites.png" width="30%">
+<img src="media/cocktail_list.png" width="30%">&nbsp;&nbsp;<img src="media/cocktail_info.png" width="30%">&nbsp;&nbsp;<img src="media/search.png" width="30%">
 
 ## Tech stack & Libraries
 
@@ -27,6 +26,11 @@
 ## MAD Score
 
 ![mad_score](media/mad_score.png)
+
+## Open API
+
+Cocktail Recipe App using the [TheCocktailDB](https://www.thecocktaildb.com) for construct RESTful API.
+This DB provides drinks and cocktails from around the world.
 
 ## License
 
