@@ -1,8 +1,6 @@
 package com.beomsu317.cocktailrecipeapp.presentation.util.screens.cocktails_info.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -12,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -33,7 +30,7 @@ import com.google.accompanist.placeholder.material.fade
 
 @ExperimentalMaterialApi
 @Composable
-fun CocktailsInfoItem(
+fun CocktailsInfoPagerItem(
     cocktailInfo: CocktailInfo,
     pageOffset: Float,
     onIngredientClick: (String) -> Unit,
@@ -75,18 +72,17 @@ fun CocktailsInfoItem(
         ) {
             Card(
                 border = BorderStroke(
-                    width = 2.dp, color = if (isLoading) {
-                        Color.Transparent
-                    } else {
-                        MaterialTheme.colors.primary
-                    }
+                    width = 1.dp,
+                    color = Color.LightGray
                 ),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .weight(0.4f)
+                    .padding(horizontal = 70.dp)
                     .placeholder(
                         visible = isLoading,
-                        highlight = PlaceholderHighlight.fade()
+                        highlight = PlaceholderHighlight.fade(),
+                        shape = RoundedCornerShape(16.dp)
                     ),
                 elevation = 16.dp
             ) {

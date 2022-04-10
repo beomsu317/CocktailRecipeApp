@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
 import com.beomsu317.cocktailrecipeapp.presentation.util.OneTimeEvent
-import com.beomsu317.cocktailrecipeapp.presentation.util.components.CocktailsInfo
+import com.beomsu317.cocktailrecipeapp.presentation.util.components.CocktailsInfoPager
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.flow.collectLatest
 
@@ -90,7 +90,7 @@ fun CocktailInfosSection(
     onIngredientClick: (String) -> Unit,
     onLikeClick: (CocktailInfo) -> Unit
 ) {
-    CocktailsInfo(
+    CocktailsInfoPager(
         cocktailsInfo = if (single) {
             if (cocktailsInfo.isNotEmpty()) {
                 listOf(cocktailsInfo.first())
