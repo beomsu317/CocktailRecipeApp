@@ -1,6 +1,10 @@
 # Cocktail Recipe App
 
 <img src="media/category.png" width="30%">
+<img src="media/cocktail_list.png" width="30%">
+<img src="media/cocktail_info.png" width="30%">
+<img src="media/my_cocktails.png" width="30%">
+<img src="media/search.png" width="30%">
 
 ## Tech stack & Libraries
 
