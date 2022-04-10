@@ -1,6 +1,10 @@
 # Cocktail Recipe App
 
+Cocktail Recipe App is an Application based on Modern Android tecth-stacks especially focus on Jetpack Compose UI. Fetching data from network and store favorite cocktail in database.
+
 <img src="media/cocktail_list.png" width="30%">&nbsp;&nbsp;<img src="media/cocktail_info.png" width="30%">&nbsp;&nbsp;<img src="media/search.png" width="30%">
+
+<img src="media/cocktail_list.png" align="right" width="30%">
 
 ## Tech stack & Libraries
 
@@ -30,7 +34,7 @@
 ## Open API
 
 Cocktail Recipe App using the [TheCocktailDB](https://www.thecocktaildb.com) for construct RESTful API.
-This DB provides drinks and cocktails from around the world.
+This DB provides API related drinks and cocktails from around the world.
 
 ## License
 
