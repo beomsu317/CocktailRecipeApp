@@ -4,7 +4,7 @@ Cocktail Recipe App is an Application based on Modern Android tecth-stacks espec
 
 <img src="media/cocktail_list.png" width="30%">&nbsp;&nbsp;<img src="media/cocktail_info.png" width="30%">&nbsp;&nbsp;<img src="media/search.png" width="30%">
 
-<img src="media/cocktail_list.png" align="right" width="40%">
+<img src="media/preview.gif" align="right" width="30%">
 
 ## Tech stack & Libraries
 
