@@ -1,12 +1,15 @@
 package com.beomsu317.cocktailrecipeapp.presentation.util.screens.cocktails_info
 
-import androidx.compose.runtime.State
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.palette.graphics.Palette
 import com.beomsu317.cocktailrecipeapp.common.Resource
 import com.beomsu317.cocktailrecipeapp.domain.model.Cocktail
 import com.beomsu317.cocktailrecipeapp.domain.use_case.CocktailUseCases
@@ -60,6 +63,21 @@ class CocktailsInfoViewModel @Inject constructor(
                     }
                     refreshIds()
                 }
+            }
+            is CocktailsInfoEvent.CalcDominantColor -> {
+                viewModelScope.launch {
+                    calcDominantColor(event.drawable)
+                }
+            }
+        }
+    }
+
+    private fun calcDominantColor(drawable: Drawable) {
+        val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+        Palette.from(bmp).generate { palette ->
+            palette?.dominantSwatch?.rgb?.let { colorValue ->
+                state = state.copy(dominantColor = colorValue)
             }
         }
     }

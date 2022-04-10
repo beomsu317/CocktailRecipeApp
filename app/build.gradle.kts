@@ -88,4 +88,7 @@ dependencies {
     annotationProcessor(Room.roomCompiler)
     kapt(Room.roomCompiler)
     implementation(Room.runtimeLivedata)
+
+    implementation(Android.palette)
+
 }

@@ -1,5 +1,6 @@
 package com.beomsu317.cocktailrecipeapp.presentation.util.components
 
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -18,8 +19,10 @@ fun CocktailsInfoPager(
     isLoading: Boolean,
     useIndicator: Boolean,
     ids: List<Int>,
+    dominantColor: Int,
     onIngredientClick: (String) -> Unit,
     onLikeClick: (CocktailInfo) -> Unit,
+    onCalcDominantColor: (Drawable) -> Unit
 ) {
     val pagerState = rememberPagerState()
     Box(
@@ -44,8 +47,9 @@ fun CocktailsInfoPager(
                     onIngredientClick = onIngredientClick,
                     isLoading = isLoading,
                     ids = ids,
+                    dominantColor = dominantColor,
                     onLikeClick = onLikeClick,
-                    modifier = Modifier.fillMaxSize()
+                    onCalcDominantColor = onCalcDominantColor
                 )
             }
             if (useIndicator) {
