@@ -1,6 +1,6 @@
 # Cocktail Recipe App
 
-Cocktail Recipe App is an Application based on Modern Android tecth-stacks especially focus on Jetpack Compose UI. Fetching data from network and store favorite cocktail in database.
+<p align="center"> Cocktail Recipe App is an Application based on Modern Android tecth-stacks especially focus on Jetpack Compose UI. Fetching data from network and store favorite cocktail in database. </p>
 
 <p align="center"> <img src="media/cocktail_list.png" width="30%">&nbsp;&nbsp;<img src="media/cocktail_info.png" width="30%">&nbsp;&nbsp;<img src="media/search.png" width="30%"> </p>
 
