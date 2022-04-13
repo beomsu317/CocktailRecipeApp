@@ -6,7 +6,7 @@ Cocktail Recipe App is an Application based on Modern Android tecth-stacks espec
 
 <img src="media/preview.gif" align="right" width="40%">
 
-## Tech stack & Libraries
+## Tech stacks & Libraries
 
 - [Kotlin](https://developer.android.com/kotlin) based, [Kotlin Flow](https://developer.android.com/kotlin/flow) + [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for asynchronous.
 - [Material Components](https://github.com/material-components/material-components-android) - Material design library.
