@@ -15,7 +15,6 @@ data class CocktailInfoEntity(
     val strDrinkThumb: String,
     val ingredients: List<Pair<String, String?>>,
     val strInstructions: String?,
-    val strImageSource: String?,
 )
 
 fun CocktailInfoEntity.toCocktailInfo(): CocktailInfo {
@@ -29,6 +28,5 @@ fun CocktailInfoEntity.toCocktailInfo(): CocktailInfo {
         strDrinkThumb = strDrinkThumb,
         ingredients = ingredients,
         strInstructions = strInstructions,
-        strImageSource = strImageSource
     )
 }

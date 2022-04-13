@@ -1,7 +1,9 @@
 package com.beomsu317.cocktailrecipeapp.presentation.search.search_home
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beomsu317.cocktailrecipeapp.common.Resource
@@ -21,8 +23,7 @@ class SearchHomeViewModel @Inject constructor(
     private val cocktailUseCases: CocktailUseCases,
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(SearchHomeState())
-    val state: State<SearchHomeState> = _state
+    var state by mutableStateOf(SearchHomeState())
 
     private val _oneTimeEventChannel = Channel<OneTimeEvent>()
     val oneTimeEventFlow = _oneTimeEventChannel.receiveAsFlow()
@@ -40,7 +41,7 @@ class SearchHomeViewModel @Inject constructor(
             }
             is SearchHomeEvent.ToggleCocktailInfo -> {
                 viewModelScope.launch {
-                    if (_state.value.ids.contains(event.cocktailInfo.idDrink)) {
+                    if (state.ids.contains(event.cocktailInfo.idDrink)) {
                         cocktailUseCases.deleteCocktailInfoByIdUseCase(event.cocktailInfo.idDrink)
                     } else {
                         cocktailUseCases.insertCocktailInfoUseCase(event.cocktailInfo)
@@ -52,7 +53,7 @@ class SearchHomeViewModel @Inject constructor(
     }
 
     private fun getCocktails(name: String) {
-        _state.value = _state.value.copy(cocktails = emptyList(), name = name)
+        state = state.copy(cocktails = emptyList(), name = name)
 
         if (name.isEmpty()) {
             viewModelScope.launch {
@@ -64,7 +65,7 @@ class SearchHomeViewModel @Inject constructor(
         cocktailUseCases.getCocktailInfosByNameUseCase(name).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(
+                    state = state.copy(
                         isLoading = false,
                         cocktails = result.data ?: emptyList()
                     )
@@ -75,10 +76,10 @@ class SearchHomeViewModel @Inject constructor(
                             result.message ?: "An unexpected error occured"
                         )
                     )
-                    _state.value = _state.value.copy(isLoading = false)
+                    state = state.copy(isLoading = false)
                 }
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    state = state.copy(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
@@ -87,7 +88,7 @@ class SearchHomeViewModel @Inject constructor(
     private fun refreshIds() {
         getIdsJob?.cancel()
         getIdsJob = cocktailUseCases.getCocktailInfoIdsUseCase().onEach { ids ->
-            _state.value = _state.value.copy(ids = ids)
+            state = state.copy(ids = ids)
         }.launchIn(viewModelScope)
     }
 }

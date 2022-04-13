@@ -11,6 +11,6 @@ class InsertCocktailInfoUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(cocktailInfo: CocktailInfo) {
-        repository.insertCocktailInfo(cocktailInfo.toCocktailInfoEntity())
+        repository.insertCocktailInfo(cocktailInfo)
     }
 }

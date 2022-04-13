@@ -72,7 +72,6 @@ fun CocktailInfosDto.toCocktailInfos(): List<CocktailInfo> {
                 strDrinkThumb = drink.strDrinkThumb,
                 ingredients = ingredients,
                 strInstructions = drink.strInstructions,
-                strImageSource = drink.strImageSource
             )
         }
     } ?: emptyList()

@@ -155,7 +155,14 @@ fun CocktailsInfoPagerItem(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = cocktailInfo.strInstructions.toString(),
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center,
+                    color = Color.Black
+                )
+                Spacer(modifier = Modifier.height(16.dp))
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier

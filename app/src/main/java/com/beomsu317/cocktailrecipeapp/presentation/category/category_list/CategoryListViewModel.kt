@@ -1,7 +1,9 @@
 package com.beomsu317.cocktailrecipeapp.presentation.category.category_list
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.beomsu317.cocktailrecipeapp.common.Resource
@@ -19,8 +21,8 @@ class CategoryListViewModel @Inject constructor(
     private val cocktailUseCases: CocktailUseCases
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(CategoryListState())
-    val state: State<CategoryListState> = _state
+    var state by mutableStateOf(CategoryListState())
+        private set
 
     private val _oneTimeEventChannel = Channel<OneTimeEvent>()
     val oneTimeEventFlow = _oneTimeEventChannel.receiveAsFlow()
@@ -33,7 +35,7 @@ class CategoryListViewModel @Inject constructor(
         cocktailUseCases.getCategoriesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(
+                    state = state.copy(
                         categories = result?.data ?: emptyList(),
                         isLoading = false
                     )
@@ -44,10 +46,10 @@ class CategoryListViewModel @Inject constructor(
                             result?.message ?: "An unexpected error occured"
                         )
                     )
-                    _state.value = _state.value.copy(isLoading = false)
+                    state = state.copy(isLoading = false)
                 }
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    state = state.copy(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)

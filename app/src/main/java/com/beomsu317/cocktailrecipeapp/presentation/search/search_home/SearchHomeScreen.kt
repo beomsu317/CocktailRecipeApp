@@ -30,7 +30,7 @@ fun SearchHomeScreen(
     onCocktailClick: (CocktailInfo) -> Unit,
     viewModel: SearchHomeViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val state = viewModel.state
     val oneTimeEventFlow = viewModel.oneTimeEventFlow
     LaunchedEffect(key1 = oneTimeEventFlow) {
         oneTimeEventFlow.collectLatest { oneTimeEvent ->

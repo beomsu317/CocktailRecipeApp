@@ -9,6 +9,7 @@ import com.beomsu317.cocktailrecipeapp.data.remote.dto.CategoriesDto
 import com.beomsu317.cocktailrecipeapp.data.remote.dto.CocktailInfosDto
 import com.beomsu317.cocktailrecipeapp.data.remote.dto.CocktailsDto
 import com.beomsu317.cocktailrecipeapp.data.remote.dto.IngredientsDto
+import com.beomsu317.cocktailrecipeapp.domain.model.CocktailInfo
 import kotlinx.coroutines.flow.Flow
 
 interface CocktailRepository {
@@ -21,11 +22,11 @@ interface CocktailRepository {
 
     suspend fun getIngredients(name: String): IngredientsDto
 
-    suspend fun insertCocktailInfo(cocktailInfoEntity: CocktailInfoEntity)
+    suspend fun insertCocktailInfo(cocktailInfo: CocktailInfo)
 
     suspend fun deleteCocktailInfoById(id: Int)
 
     fun getCocktailInfoIds(): Flow<List<Int>>
 
-    fun getMyCocktailsInfoEntities(): Flow<List<CocktailInfoEntity>>
+    fun getMyCocktailsInfo(): Flow<List<CocktailInfo>>
 }
